@@ -35,3 +35,10 @@ struct Ingredient: Decodable {
     var weight: Double
     var image: String?
 }
+
+struct NutrientInfo: Decodable {
+    
+    var label: String
+    var quantity: Double
+    var unit: String
+}

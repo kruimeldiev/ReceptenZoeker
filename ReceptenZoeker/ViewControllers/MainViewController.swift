@@ -28,7 +28,7 @@ class MainViewController: UIViewController {
         // De ViewController aanmaken van de volgende view
         let viewController = segue.destination as! ReceptenLijstViewController
         
-        viewController.title = self.zoekTextField.text!
+        viewController.title = self.zoekTextField.text!.localizedCapitalized
         
         // De ZoekResultaatVM instantiëren van de ReceptenLijstViewController
         // De completion handler wacht tot de netwerk call fetchRecepten voltooid is, vervolgens wordt de tableView herladen

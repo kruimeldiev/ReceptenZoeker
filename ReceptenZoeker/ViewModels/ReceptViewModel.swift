@@ -61,11 +61,53 @@ class ReceptViewModel {
         return url
     }
     
+    var servings: Int {
+        guard let yield = recept?.yield else {
+            return 0
+        }
+        return Int(yield)
+    }
+    
+    var dieetLabels: [String] {
+        guard let diet = recept?.dietLabels else {
+            return []
+        }
+        return diet
+    }
+    
+    var gezondheidsLabels: [String] {
+        guard let health = recept?.healthLabels else {
+            return []
+        }
+        return health
+    }
+    
+    var waarschuwingen: [String] {
+        guard let cautions = recept?.cautions else {
+            return []
+        }
+        return cautions
+    }
+    
+    var ingredienten: [String] {
+        guard let ingr = recept?.ingredientLines else {
+            return []
+        }
+        return ingr
+    }
+    
     var kcal: Float {
         guard let calories = recept?.calories else {
             return 0.0
         }
         return calories
+    }
+    
+    var gewicht: Float {
+        guard let weight = recept?.totalWeight else {
+            return 0.0
+        }
+        return weight
     }
     
     var bereidingTijd: Int {

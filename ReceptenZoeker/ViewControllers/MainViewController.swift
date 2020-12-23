@@ -32,7 +32,7 @@ class MainViewController: UIViewController {
         
         // De ZoekResultaatVM instantiëren van de ReceptenLijstViewController
         // De completion handler wacht tot de netwerk call fetchRecepten voltooid is, vervolgens wordt de tableView herladen
-        viewController.zoekResultaatVM.fetchRecepten(zoekTerm: self.zoekTextField.text!) {
+        viewController.zoekResultaatVM.fetchRecepten(zoekTerm: self.zoekTextField.text!, vanaf: 0, tot: viewController.zoekResultaatVM.receptenLadenPerCall) {
             // Het herladen van de TableView wordt uitgevoerd op de main thread omdat het een UIKit functie is
             DispatchQueue.main.async {
                 viewController.receptenLijstTableView.reloadData()

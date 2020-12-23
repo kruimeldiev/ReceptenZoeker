@@ -48,5 +48,32 @@ extension ReceptenLijstViewController: UITableViewDataSource, UITableViewDelegat
         
         return cell
     }
+    
+    // Deze functie wordt iedere keer wanneer de gebruiker door de TableView scrollt aangeroepen
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        // Als de gebruiker verder naar beneden scrollt dan de contentHeight min de frame height van de scrollView, wordt dit aangeroepen
+        // * 2 zorgt ervoor dat de API fetch net iets eerder wordt aangeroepen
+        if offsetY > contentHeight - scrollView.frame.height * 2 {
+            
+            // Als de data momenteel nog niet geladen wordt dan...
+            if !self.zoekResultaatVM.isFetching {
+                
+                self.zoekResultaatVM.fetchRecepten(zoekTerm: self.zoekResultaatVM.zoekTerm,
+                                                   vanaf: (self.zoekResultaatVM.receptenLadenPerCall * self.zoekResultaatVM.aantalFetches),
+                                                   tot: (self.zoekResultaatVM.receptenLadenPerCall * self.zoekResultaatVM.aantalFetches + self.zoekResultaatVM.receptenLadenPerCall)) {
+                    DispatchQueue.main.async {
+                        self.receptenLijstTableView.reloadData()
+                    }
+                }
+                
+            }
+            
+        }
+        
+    }
 
 }

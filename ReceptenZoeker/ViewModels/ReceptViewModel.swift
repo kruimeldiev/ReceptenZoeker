@@ -21,7 +21,6 @@ class ReceptViewModel {
         // Eerst controlleren of de image al in de cache zit
         // De completion kan geforceerd worden omdat het in een if-statement zit welke controlleerd of het object aanwezig is
         if ImageCache.cache.object(forKey: NSString(string: self.fotoURL)) != nil {
-            print("Foto uit cache")
             completion(ImageCache.cache.object(forKey: NSString(string: self.fotoURL))!)
             return
         }

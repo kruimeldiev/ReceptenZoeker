@@ -12,10 +12,10 @@ struct NetworkService {
     
     // Deze functie maakt gebruik van een zoekterm om recepten data te downloaden uit de API
     // De functie is static zodat deze vanuit andere klassen kan worden aangeroepen, zonder dat er iedere keer een nieuwe instantie van NetworkService moet worden aangemaakt
-    static func getSearchResult(searchTerm: String, completion: @escaping(ZoekResultaat) -> ()) {
+    static func getSearchResult(searchTerm: String, vanafAantal: Int, totAantal: Int, completion: @escaping(ZoekResultaat) -> ()) {
         
         // Maken van de URL en de request
-        guard let url = URL(string: Constants.API_URL + searchTerm) else {
+        guard let url = URL(string: Constants.API_URL + searchTerm + "&from=\(String(vanafAantal))&to=\(String(totAantal))") else {
             print("API URL is niet beschikbaar")
             return
         }
@@ -77,7 +77,6 @@ struct NetworkService {
             if data != nil {
                 DispatchQueue.main.async {
                     ImageCache.cache.setObject(UIImage(data: data!)!, forKey: NSString(string: fotoUrl))
-                    print("Foto gedownload van web")
                     completion(UIImage(data: data!)!)
                 }
             }

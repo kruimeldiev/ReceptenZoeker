@@ -17,6 +17,18 @@ class ZoekResultaatViewModel {
     
     private var imageCache = ImageCache()
     
+    // Deze boolean houdt bij of er momenteel data wordt geladen vanuit de API
+    var isFetching = false
+    
+    // Dit getal houdt bij hoevaak er een fetch is gedaan voor deze ViewModel
+    // Hiermee kan je ervoor zorgen dat dezelfde resultaten niet worden gedownload wanneer je meer recepten fetched
+    var aantalFetches = 0
+    
+    // Dit is het aantal recepten dat wordt gedownload per keer dat er een netwerk call wordt gemaakt
+    let receptenLadenPerCall = 10
+    
+    var recepten = [ReceptViewModel]()
+    
     var zoekTerm: String {
         guard let q = zoekResultaat?.q else {
             return ""
@@ -31,30 +43,39 @@ class ZoekResultaatViewModel {
         return count
     }
     
-    var recepten: [ReceptViewModel] {
+    // Deze functie roept de NetwerkService aan om de data uit de API op te halen
+    // Dankzij de completion handler kan er een functie worden uitgevoerd nadat de netwerk call gemaakt en voltooid is (zoals reloaden van TableView)
+    func fetchRecepten(zoekTerm: String, vanaf: Int, tot: Int, completion: @escaping() -> ()) {
+        
+        self.isFetching = true
+        print("Begin Fetch")
+        
+        NetworkService.getSearchResult(searchTerm: zoekTerm, vanafAantal: vanaf, totAantal: tot) { result in
+            self.zoekResultaat = result
+            
+            // Recepten toevoegen aan de 'recepten' array
+            self.appendRecepten()
+            
+            self.aantalFetches += 1
+            
+            self.isFetching = false
+            print("Einde Fetch")
+            completion()
+        }
+    }
+    
+    // Deze functie zorgt ervoor dat de data die wordt gedownload ook wordt toegevoegd aan de recepten array
+    func appendRecepten() {
         
         // Unwrapping van een array vol met recepten
         guard let hits = zoekResultaat?.hits else {
-            return []
+            print("Geen hits gevonden")
+            return
         }
-        
-        // Array maken voor ReceptViewModels
-        var receptenHits = [ReceptViewModel]()
         
         // Voor ieder recept in hits (zoekResultaat.hits), een nieuwe ReceptViewModel instantiëren en in receptenHits plaatsen
         for hit in hits {
-            receptenHits.append(ReceptViewModel.init(recept: hit.recipe))
-        }
-        
-        return receptenHits
-    }
-    
-    // Deze functie roept de NetwerkService aan om de data uit de API op te halen
-    // Dankzij de completion handler kan er een functie worden uitgevoerd nadat de netwerk call gemaakt en voltooid is
-    func fetchRecepten(zoekTerm: String, completion: @escaping() -> ()) {
-        NetworkService.getSearchResult(searchTerm: zoekTerm) { result in
-            self.zoekResultaat = result
-            completion()
+            recepten.append(ReceptViewModel.init(recept: hit.recipe))
         }
     }
     

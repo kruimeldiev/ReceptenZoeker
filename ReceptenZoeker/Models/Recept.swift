@@ -23,7 +23,7 @@ struct Recept: Decodable {
     var ingredients: [Ingredient]
     var calories: Float
     var totalWeight: Float
-    var totalTime: Int
+    var totalTime: Float
     
     // TOTAL NUTRIENS TOEVOEGEN
     // TOTAL DAILY TOEVOEGEN

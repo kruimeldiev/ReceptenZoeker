@@ -11,24 +11,11 @@ class ReceptViewModel {
     
     private var recept: Recept?
     
+    var servings: Int
+    
     init(recept: Recept) {
         self.recept = recept
-    }
-    
-    // functie om de afbeelding te laden voor het recept
-    func fetchImage(completion: @escaping(UIImage) -> ()) {
-
-        // Eerst controlleren of de image al in de cache zit
-        // De completion kan geforceerd worden omdat het in een if-statement zit welke controlleerd of het object aanwezig is
-        if ImageCache.cache.object(forKey: NSString(string: self.fotoURL)) != nil {
-            completion(ImageCache.cache.object(forKey: NSString(string: self.fotoURL))!)
-            return
-        }
-        
-        // Als de foto niet in de cache zit, dan netwerk aanroepen
-        NetworkService.getImageFromUrl(fotoUrl: self.fotoURL) { foto in
-            completion(foto)
-        }
+        self.servings = Int(recept.yield)
     }
     
     var receptNaam: String {
@@ -58,13 +45,6 @@ class ReceptViewModel {
             return "N/A"
         }
         return url
-    }
-    
-    var servings: Int {
-        guard let yield = recept?.yield else {
-            return 0
-        }
-        return Int(yield)
     }
     
     var dieetLabels: [String] {
@@ -111,9 +91,24 @@ class ReceptViewModel {
     
     var bereidingTijd: Int {
         guard let tijd = recept?.totalTime else {
-            return 0
+            return 392834
         }
-        return tijd
+        return Int(tijd)
     }
     
+    // functie om de afbeelding te laden voor het recept
+    func fetchImage(completion: @escaping(UIImage) -> ()) {
+
+        // Eerst controlleren of de image al in de cache zit
+        // De completion kan geforceerd worden omdat het in een if-statement zit welke controlleerd of het object aanwezig is
+        if ImageCache.cache.object(forKey: NSString(string: self.fotoURL)) != nil {
+            completion(ImageCache.cache.object(forKey: NSString(string: self.fotoURL))!)
+            return
+        }
+        
+        // Als de foto niet in de cache zit, dan netwerk aanroepen
+        NetworkService.getImageFromUrl(fotoUrl: self.fotoURL) { foto in
+            completion(foto)
+        }
+    }
 }

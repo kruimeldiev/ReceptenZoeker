@@ -23,7 +23,20 @@ class ReceptenLijstViewController: UIViewController {
         // Instellen van de delegate van de TableView
         // De delegate regelt alle user interactions in de TableView
         receptenLijstTableView.delegate = self
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        // Controlleren of er een row is geselecteerd door de gebruiker
+        guard receptenLijstTableView.indexPathForSelectedRow != nil else {
+            return
+        }
+        
+        let geselecteerdeRecept = zoekResultaatVM.recepten[receptenLijstTableView.indexPathForSelectedRow!.row]
+        
+        let receptVC = segue.destination as! ReceptDetailViewController
+        
+        receptVC.recept = geselecteerdeRecept
     }
 }
 
@@ -69,11 +82,8 @@ extension ReceptenLijstViewController: UITableViewDataSource, UITableViewDelegat
                         self.receptenLijstTableView.reloadData()
                     }
                 }
-                
             }
-            
         }
-        
     }
 
 }

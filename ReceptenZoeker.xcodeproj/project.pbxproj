@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AFB14FF52593A94000CFC09F /* ReceptDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB14FF42593A94000CFC09F /* ReceptDetailViewController.swift */; };
 		AFFBD6992587CC72002AE113 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFBD6982587CC72002AE113 /* AppDelegate.swift */; };
 		AFFBD69B2587CC72002AE113 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFBD69A2587CC72002AE113 /* SceneDelegate.swift */; };
 		AFFBD6A02587CC72002AE113 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFFBD69E2587CC72002AE113 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AFB14FF42593A94000CFC09F /* ReceptDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceptDetailViewController.swift; sourceTree = "<group>"; };
 		AFFBD6952587CC72002AE113 /* ReceptenZoeker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReceptenZoeker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFFBD6982587CC72002AE113 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFFBD69A2587CC72002AE113 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				AFFBD6C42589154E002AE113 /* MainViewController.swift */,
 				AFFBD6D425895030002AE113 /* ReceptenLijstViewController.swift */,
+				AFB14FF42593A94000CFC09F /* ReceptDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			files = (
 				AFFBD6CE25891E0C002AE113 /* ZoekResultaatViewModel.swift in Sources */,
 				AFFBD6D525895030002AE113 /* ReceptenLijstViewController.swift in Sources */,
+				AFB14FF52593A94000CFC09F /* ReceptDetailViewController.swift in Sources */,
 				AFFBD6C52589154E002AE113 /* MainViewController.swift in Sources */,
 				AFFBD6BE25882F18002AE113 /* ZoekResultaat.swift in Sources */,
 				AFFBD6992587CC72002AE113 /* AppDelegate.swift in Sources */,

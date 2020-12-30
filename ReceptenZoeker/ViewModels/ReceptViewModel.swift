@@ -11,8 +11,6 @@ class ReceptViewModel {
     
     private var recept: Recept?
     
-    var servings: Int
-    
     init(recept: Recept) {
         self.recept = recept
         self.servings = Int(recept.yield)
@@ -46,6 +44,8 @@ class ReceptViewModel {
         }
         return url
     }
+    
+    var servings: Int
     
     var dieetLabels: [String] {
         guard let diet = recept?.dietLabels else {

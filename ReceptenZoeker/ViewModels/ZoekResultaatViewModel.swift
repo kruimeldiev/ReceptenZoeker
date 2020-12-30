@@ -75,7 +75,7 @@ class ZoekResultaatViewModel {
         
         // Voor ieder recept in hits (zoekResultaat.hits), een nieuwe ReceptViewModel instantiëren en in receptenHits plaatsen
         for hit in hits {
-            recepten.append(ReceptViewModel.init(recept: hit.recipe))
+            recepten.append(ReceptViewModel(recept: hit.recipe))
         }
     }
     

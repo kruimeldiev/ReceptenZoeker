@@ -9,44 +9,42 @@ import UIKit
 
 class ReceptDetailViewController: UIViewController {
     
-    var recept: ReceptViewModel?
-
-    @IBOutlet weak var receptFoto: UIImageView!
-    @IBOutlet weak var detailTopView: UIView!
-    @IBOutlet weak var receptNaamLabel: UILabel!
-    @IBOutlet weak var bronDetailLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var servingsLabel: UILabel!
-    @IBOutlet weak var kcalLabel: UILabel!
+    // Omdat het recept van de VC wordt bepaald in de segue kan deze geforceerd worden
+    var recept: ReceptViewModel!
     
-    override func viewWillAppear(_ animated: Bool) {
-        recept!.fetchImage() { foto in
-            self.receptFoto.image = foto
-        }
-    }
+    @IBOutlet weak var receptFoto: UIImageView!
+    @IBOutlet weak var receptDetailLayer: UIView!
+    @IBOutlet weak var receptNaamLabel: UILabel!
+    @IBOutlet weak var receptBronLabel: UILabel!
+    @IBOutlet weak var receptTijdLabel: UILabel!
+    @IBOutlet weak var receptServingsLabel: UILabel!
+    @IBOutlet weak var receptKcalLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.detailTopView.layer.cornerRadius = 20
-        self.receptNaamLabel.text = recept!.receptNaam
-        self.bronDetailLabel.text = "Source: \(recept!.bron)"
-        self.timeLabel.text = "\(recept!.bereidingTijd) min"
-        self.servingsLabel.text = "\(recept!.servings)"
-        self.kcalLabel.text = "\(recept!.kcal) kcal"
+        
+        makeDetailView(inputRecept: recept)
+    }
+    
+    func makeDetailView(inputRecept: ReceptViewModel) {
+        recept.fetchImage() { foto in
+            self.receptFoto.image = foto
+        }
+        self.receptDetailLayer.layer.cornerRadius = 20
+        self.receptNaamLabel.text = recept.receptNaam
+        self.receptBronLabel.text = "Source: \(recept.bron)"
+        self.receptTijdLabel.text = "\(recept.bereidingTijd) min"
+        self.receptServingsLabel.text = String(recept.servings)
+        self.receptKcalLabel.text = "\(recept.kcal) kcal"
     }
     
     @IBAction func minServingButton(_ sender: Any) {
-        if self.recept!.servings > 0 {
-            self.recept?.servings -= 1
-            viewDidLoad()
-        }
-    }
-    
-    @IBAction func plusServingButton(_ sender: Any) {
-        self.recept?.servings += 1
+        self.recept.servings -= 1
         viewDidLoad()
     }
     
-
+    @IBAction func plusServingButton(_ sender: Any) {
+        self.recept.servings += 1
+        viewDidLoad()
+    }
 }

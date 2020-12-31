@@ -15,7 +15,7 @@ struct Recept: Decodable {
     var source: String
     var url: String
     var shareAs: String
-    var yield: Double
+    var yield: Float
     var dietLabels: [String]
     var healthLabels: [String]
     var cautions: [String]

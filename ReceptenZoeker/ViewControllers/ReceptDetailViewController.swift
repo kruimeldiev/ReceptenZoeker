@@ -14,6 +14,7 @@ class ReceptDetailViewController: UIViewController {
     
     @IBOutlet weak var receptFoto: UIImageView!
     @IBOutlet weak var receptDetailLayer: UIView!
+    @IBOutlet weak var receptServingLayer: UIView!
     @IBOutlet weak var receptNaamLabel: UILabel!
     @IBOutlet weak var receptBronLabel: UILabel!
     @IBOutlet weak var receptTijdLabel: UILabel!
@@ -31,20 +32,25 @@ class ReceptDetailViewController: UIViewController {
             self.receptFoto.image = foto
         }
         self.receptDetailLayer.layer.cornerRadius = 20
+        self.receptServingLayer.layer.borderWidth = 0.3
+        self.receptServingLayer.layer.borderColor = UIColor.lightGray.cgColor
         self.receptNaamLabel.text = recept.receptNaam
         self.receptBronLabel.text = "Source: \(recept.bron)"
-        self.receptTijdLabel.text = "\(recept.bereidingTijd) min"
+        self.receptTijdLabel.text = "\(recept.bereidingTijd)'"
         self.receptServingsLabel.text = String(recept.servings)
         self.receptKcalLabel.text = "\(recept.kcal) kcal"
     }
     
     @IBAction func minServingButton(_ sender: Any) {
-        self.recept.servings -= 1
-        viewDidLoad()
+        if self.recept.servings > 1 {
+            self.recept.servings -= 1
+            viewDidLoad()
+        }
     }
     
     @IBAction func plusServingButton(_ sender: Any) {
         self.recept.servings += 1
         viewDidLoad()
     }
+    
 }

@@ -32,7 +32,7 @@ class ReceptTableViewCell: UITableViewCell {
         self.receptTitle.text = recept.receptNaam
         
         self.timeImage.image = UIImage(systemName: "clock")
-        self.receptTime.text = "\(recept.bereidingTijd) min"
+        self.receptTime.text = "\(recept.bereidingTijd)'"
         
         self.servingsImage.image = UIImage(systemName: "person")
         self.receptServings.text = "\(recept.servings)"

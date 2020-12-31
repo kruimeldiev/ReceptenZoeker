@@ -11,9 +11,13 @@ class ReceptViewModel {
     
     private var recept: Recept?
     
+    var servings: Int
+    var kcal: Int
+    
     init(recept: Recept) {
         self.recept = recept
         self.servings = Int(recept.yield)
+        self.kcal = Int(recept.calories / recept.yield)
     }
     
     var receptNaam: String {
@@ -45,8 +49,6 @@ class ReceptViewModel {
         return url
     }
     
-    var servings: Int
-    
     var dieetLabels: [String] {
         guard let diet = recept?.dietLabels else {
             return []
@@ -73,13 +75,6 @@ class ReceptViewModel {
             return []
         }
         return ingr
-    }
-    
-    var kcal: Float {
-        guard let calories = recept?.calories else {
-            return 0.0
-        }
-        return calories
     }
     
     var gewicht: Float {
@@ -111,4 +106,5 @@ class ReceptViewModel {
             completion(foto)
         }
     }
+    
 }

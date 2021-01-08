@@ -12,48 +12,66 @@ class ReceptDetailViewController: UIViewController {
     // Omdat het recept van de VC wordt bepaald in de segue kan deze geforceerd worden
     var recept: ReceptViewModel!
     
-    var originalHeight: CGFloat!
-    
+    @IBOutlet weak var detailScrollView: UIScrollView!
     @IBOutlet weak var receptFotoView: UIImageView!
     @IBOutlet weak var receptFotoViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var receptFotoVIewTop: NSLayoutConstraint!
-    @IBOutlet weak var detailViewScrollView: UIScrollView!
-    @IBOutlet weak var receptInfoView: UIView!
+    @IBOutlet weak var receptDetailView: UIView!
+    @IBOutlet weak var receptDetailViewTop: NSLayoutConstraint!
+    @IBOutlet weak var receptNaamLabel: UILabel!
+    @IBOutlet weak var receptBronLabel: UILabel!
+    @IBOutlet weak var receptTijdLabel: UILabel!
+    @IBOutlet weak var receptServingsLabel: UILabel!
+    @IBOutlet weak var receptKcalLabel: UILabel!
     
+    
+    var originalFotoHeight = CGFloat(0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        detailViewScrollView.delegate = self
+        detailScrollView.delegate = self
         
-        recept.fetchImage() { foto in
+        createDetailView()
+    }
+    
+    func createDetailView() {
+        
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.tintColor = .white
+        
+        self.recept.fetchImage() { foto in
             self.receptFotoView.image = foto
         }
         
-        self.receptInfoView.layer.cornerRadius = 20
+        originalFotoHeight = receptFotoViewHeight.constant
         
-        originalHeight = receptFotoViewHeight.constant
+        self.receptDetailView.layer.cornerRadius = 20
+        
+        receptDetailViewTop.constant =  receptFotoViewHeight.constant - 20
+        
+        receptNaamLabel.text = recept.receptNaam
+        receptBronLabel.text = "Bron: \(recept.bron)"
+        receptTijdLabel.text = "\(recept.bereidingTijd)'"
+        receptServingsLabel.text = "\(recept.servings)"
+        receptKcalLabel.text = "\(recept.kcal)"
+        
     }
     
     
 }
 
+// Deze extension regelt de scroll offset van de UIScrollView in de DEtailView
 extension ReceptDetailViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let offset = detailViewScrollView.contentOffset.y
-        let defaultTop = CGFloat(0)
-        var currentTop = defaultTop
+        let offset = detailScrollView.contentOffset.y
         
         if offset < 0 {
-             currentTop = offset
-            receptFotoViewHeight.constant = originalHeight - offset
-        } else {
-            receptFotoViewHeight.constant = originalHeight
+            
+            self.receptFotoViewHeight.constant = originalFotoHeight - offset
+            
         }
-        
-        receptFotoVIewTop.constant = currentTop
         
     }
     

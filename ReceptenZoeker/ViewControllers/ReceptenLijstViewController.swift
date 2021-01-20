@@ -10,7 +10,8 @@ import UIKit
 class ReceptenLijstViewController: UIViewController {
     
     @IBOutlet weak var receptenLijstTableView: UITableView!
-
+    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+    
     var zoekResultaatVM = ZoekResultaatViewModel()
     
     override func viewDidLoad() {
@@ -23,6 +24,8 @@ class ReceptenLijstViewController: UIViewController {
         // Instellen van de delegate van de TableView
         // De delegate regelt alle user interactions in de TableView
         receptenLijstTableView.delegate = self
+        
+        self.activitySpinner.startAnimating()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -58,6 +61,8 @@ extension ReceptenLijstViewController: UITableViewDataSource, UITableViewDelegat
         
         // Cell opvullen met de data uit recept
         cell.makeReceptTableViewCell(recept: recept)
+        
+        self.activitySpinner.isHidden = true
         
         return cell
     }

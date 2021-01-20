@@ -48,7 +48,6 @@ class ZoekResultaatViewModel {
     func fetchRecepten(zoekTerm: String, vanaf: Int, tot: Int, completion: @escaping() -> ()) {
         
         self.isFetching = true
-        print("Begin Fetch")
         
         NetworkService.getSearchResult(searchTerm: zoekTerm, vanafAantal: vanaf, totAantal: tot) { result in
             self.zoekResultaat = result
@@ -58,8 +57,11 @@ class ZoekResultaatViewModel {
             
             self.aantalFetches += 1
             
-            self.isFetching = false
-            print("Einde Fetch")
+            // Deze functie zit in een DispatchQueue zodat de API fetch niet constant wordt aangeroepen wanneer de gebruiker te snel scrollt
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                self.isFetching = false
+            }
+            
             completion()
         }
     }
